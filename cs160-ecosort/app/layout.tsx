@@ -48,7 +48,9 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <header className="flex flex-row items-center justify-between gap-4 p-2">
-            <div>EcoSort</div>
+            <Link href="/" legacyBehavior passHref>
+             EcoSort
+            </Link>
             <NavigationMenu>
               <Link href="/about" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>

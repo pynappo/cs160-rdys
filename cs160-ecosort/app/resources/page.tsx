@@ -49,7 +49,7 @@ const Resources = () => {
 
   return (
     <div className="container mx-auto p-8 max-w-5xl">
-      <h1 className="text-5xl font-bold mb-12 text-center py-8 font-serif">
+      <h1 className="text-5xl font-bold mb-12 text-center py-8 font-serif rounded-full bg-green-100 w-full">
         EcoSort&apos;s &quot;Comprehensive&quot; Waste Disposal Guide
       </h1>
 
@@ -72,7 +72,7 @@ const Resources = () => {
         </div>
       </section>
 
-      <Card className="mb-12">
+      <Card className="mb-12 bg-green-100">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-2xl">
             <CheckCircle className="text-green-500" size={28} />
