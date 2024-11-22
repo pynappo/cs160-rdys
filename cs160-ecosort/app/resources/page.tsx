@@ -14,38 +14,41 @@ const Resources = () => {
 
   const bestPractices = [
     {
-      title: 'Reduce waste by opting for reusable products and buying in bulk.',
-      subtext: 'This approach minimizes packaging waste and often saves money in the long run.'
+      title: 'Use San Jose’s residential garbage and recycling services effectively.',
+      subtext: 'San Jose provides three bins for waste management: blue for recyclables, green for compostables, and black for general waste. Ensure items are clean and free of food residue before recycling to prevent contamination. Pizza boxes, for instance, should be placed in the compost bin if they are greasy, but clean ones belong in the recycling bin. Take extra care to avoid placing non-recyclable plastics or hazardous materials in any of these bins, as improper sorting can disrupt waste processing systems.'
     },
     {
-      title: 'Participate in local recycling programs and stay informed about what can be recycled in your area.',
-      subtext: 'Recycling guidelines can vary by location, so it\'s important to know what\'s accepted in your community.'
+      title: 'Schedule bulky item pickups for large waste items.',
+      subtext: 'San Jose residents can schedule up to two free curbside bulky item collections annually through the city’s waste services. This program accepts items such as furniture, mattresses, large appliances, and even certain e-waste like TVs or monitors. Scheduling a pickup is easy—just contact your waste hauler or submit an online request. Proper disposal of bulky items not only keeps your property clean but also prevents illegal dumping, which harms the community and environment.'
     },
     {
-      title: 'Compost at home to manage organic waste effectively.',
-      subtext: 'Composting not only reduces waste but also creates nutrient-rich soil for gardening.'
+      title: 'Drop off hazardous waste at the San Jose Household Hazardous Waste Facility.',
+      subtext: 'Many household products, like cleaning chemicals, paints, batteries, and electronics, are classified as hazardous waste and require special handling. San Jose residents can safely dispose of these items by making an appointment at the San Jose Household Hazardous Waste Facility. Appointments are free, and the facility ensures that toxic materials are handled and recycled or disposed of properly, preventing contamination of soil, air, and water. Learn more about the types of items accepted before visiting.'
     },
     {
-      title: 'Properly label waste bins to avoid contamination of recyclables.',
-      subtext: 'Clear labeling helps ensure that recyclables aren\'t contaminated with non-recyclable items.'
+      title: 'Donate reusable items to local organizations.',
+      subtext: 'Instead of discarding items like gently used furniture, clothing, or electronics, consider donating them to local nonprofits such as Goodwill of Silicon Valley or Habitat for Humanity’s ReStore. These organizations help repurpose usable goods while supporting community programs. Additionally, many donation centers offer pickup services for large items, making it convenient for residents. Donating is not only eco-friendly but also benefits those in need, reducing the overall waste sent to landfills.'
     },
     {
-      title: 'Educate your community about the importance of waste segregation and reduction.',
-      subtext: 'Spreading awareness can lead to collective action and more significant environmental impact.'
+      title: 'Participate in neighborhood cleanup events.',
+      subtext: 'San Jose regularly organizes neighborhood cleanup days where volunteers can help remove litter from streets, parks, and public spaces. These events also provide an opportunity to learn more about waste segregation and proper disposal methods. Volunteering at a cleanup event fosters a sense of community, raises awareness about the impact of waste on local ecosystems, and sets an example for others to follow. Check the city’s website or local community boards for upcoming events in your area.'
     },
-  ];
+  ];  
 
   const additionalResources = [
     { title: 'EPA Recycling Basics', url: 'https://www.epa.gov/recycle' },
     { title: 'How to Recycle Properly - YouTube', url: 'https://www.youtube.com/watch?v=7UuUeoyYmxI' },
     { title: 'Recycling 101 - NRDC', url: 'https://www.nrdc.org/stories/recycling-101' },
-    { title: 'Waste360 - Recycling', url: 'https://www.waste360.com/recycling' },
-    { title: 'WHO Waste Management Fact Sheet', url: 'https://www.who.int/news-room/fact-sheets/detail/waste-management' },
-    { title: 'Waste Management - ScienceDirect', url: 'https://www.sciencedirect.com/topics/earth-and-planetary-sciences/waste-management' },
+    { title: 'San Jose Recycling & Garbage', url: 'https://www.sanjoseca.gov/your-government/departments/environmental-services/your-garbage-recycling' },
+    { title: 'San Jose Household Hazardous Waste Program', url: 'https://hhw.sccgov.org/' },
+    { title: 'Bulky Item Collection Services', url: 'https://www.sanjoseca.gov/your-government/departments/environmental-services/your-garbage-recycling/large-items' },
+    { title: 'Goodwill of Silicon Valley Donation Guidelines', url: 'https://goodwillsv.org/' },
+    { title: 'Santa Clara County Recycling & Waste Reduction', url: 'https://www.reducewaste.org/' },
+    { title: 'Habitat for Humanity ReStore', url: 'https://www.habitatebsv.org/restore' },
   ];
 
   return (
-    <div className="container mx-auto p-8 max-w-4xl">
+    <div className="container mx-auto p-8 max-w-5xl">
       <h1 className="text-5xl font-bold mb-12 text-center py-8 font-serif">
         EcoSort&apos;s &quot;Comprehensive&quot; Waste Disposal Guide
       </h1>
@@ -81,7 +84,7 @@ const Resources = () => {
             {bestPractices.map((practice, index) => (
               <li key={index} className="flex flex-col">
                 <div className="flex items-start">
-                  <span className="inline-block bg-green-100 text-green-800 font-semibold rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">{index + 1}</span>
+                  <span className="bg-green-100 text-green-800 font-semibold rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">{index + 1}</span>
                   <span className="font-medium text-lg">{practice.title}</span>
                 </div>
                 <p className="mt-2 ml-11 text-gray-600">{practice.subtext}</p>
@@ -99,7 +102,7 @@ const Resources = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-6 sm:grid-cols-2 place-items-center">
+          <div className="grid gap-6 sm:grid-cols-3 place-items-center">
             {additionalResources.map((resource, index) => (
               <div key={index} className="w-full max-w-xs">
                 <h3 className="font-semibold mb-2 text-lg">{resource.title}</h3>
