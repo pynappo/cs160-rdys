@@ -3,16 +3,22 @@ import localFont from "next/font/local";
 import "./globals.css";
 import * as React from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
+import { ScanLink } from "@/components/ui/scan-link";
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
   NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,26 +42,48 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <header className="flex flex-row items-center justify-between gap-4 p-2">
-          <div>EcoSort</div>
-          <NavigationMenu>
-            <Link href="/about" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                About
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenu>
-          <div className="login-register flex flex-row gap-2">
-            <Button>Login</Button>
-            <Button>Register</Button>
-          </div>
-        </header>
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <header className="flex flex-row items-center justify-between gap-4 p-2">
+            <div>EcoSort</div>
+            <NavigationMenu>
+              <Link href="/about" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  About
+                </NavigationMenuLink>
+              </Link>
+              <SignedIn>
+                <Link href="/scan" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Scan
+                  </NavigationMenuLink>
+                </Link>
+              </SignedIn>
+              <SignedOut>
+                <ScanLink />
+              </SignedOut>
+              <Link href="/resources" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Resources
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenu>
+            <div className="login-register flex flex-row gap-2">
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </div>
+          </header>
+          {children}
+          <ToastContainer />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
