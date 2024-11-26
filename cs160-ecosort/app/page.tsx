@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import * as React from "react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Leaf, Smartphone, ThumbsUp } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -21,8 +21,12 @@ export default function Home() {
                 </p>
               </div>
               <div className="space-x-4">
-                <Button>Get Started</Button>
-                <Button variant="outline">Learn More</Button>
+                <Link href="/scan">
+                  <Button>Get Started</Button>
+                </Link>
+                <Link href="/resources">
+                  <Button variant="outline">Learn More</Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -117,8 +121,8 @@ export default function Home() {
               <Card>
                 <CardContent className="p-6">
                   <p className="text-gray-600 mb-4">
-                    "EcoSort has made it so easy for me to properly dispose of
-                    my waste. I feel like I'm making a real difference!"
+                    &quot;EcoSort has made it so easy for me to properly dispose of
+                    my waste. I feel like I&apos;m making a real difference!&quot;
                   </p>
                   <p className="font-bold">- Sarah J.</p>
                 </CardContent>
@@ -126,8 +130,8 @@ export default function Home() {
               <Card>
                 <CardContent className="p-6">
                   <p className="text-gray-600 mb-4">
-                    "I never knew how much of my waste could be recycled until I
-                    started using EcoSort. It's eye-opening!"
+                    &quot;I never knew how much of my waste could be recycled until I
+                    started using EcoSort. It&apos;s eye-opening!&quot;
                   </p>
                   <p className="font-bold">- Mike T.</p>
                 </CardContent>
@@ -148,10 +152,12 @@ export default function Home() {
                 </p>
               </div>
               <div className="space-x-4">
-                <Button>
-                  Get Started
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                <Link href="/scan">
+                  <Button>
+                    Get Started
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
