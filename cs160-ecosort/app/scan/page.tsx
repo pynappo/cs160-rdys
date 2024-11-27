@@ -9,6 +9,7 @@ import Image from 'next/image';
 
 const ScanPage = () => {
   const [imageData, setImageData] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -35,6 +36,7 @@ const ScanPage = () => {
 
   const sendImageToServer = async () => {
     if (imageData) {
+      setLoading(true);
       const response = await fetch('/api/upload', {
         method: 'POST',
         headers: {
@@ -42,6 +44,7 @@ const ScanPage = () => {
         },
         body: JSON.stringify({ image: imageData }),
       });
+      setLoading(false);
       if (response.ok) {
         console.log('Image successfully sent to the server');
       } else {
@@ -51,7 +54,13 @@ const ScanPage = () => {
   };
 
   return (
-    <div className="container mx-auto p-8 max-w-4xl">
+    <div className="container mx-auto p-8 max-w-4xl relative">
+      {loading && (
+        <div className="absolute inset-0 bg-white opacity-80 flex items-center justify-center z-50">
+          <div role="status" className="border-t-transparent border-solid animate-spin mx-auto rounded-full m-5 border-black border-8 h-24 w-24">
+          </div>
+        </div>
+      )}
       <h1 className="text-5xl font-bold mb-12 text-center py-8 font-serif">
         Scan Your Waste
       </h1>
@@ -91,7 +100,9 @@ const ScanPage = () => {
                   <Image
                     src={imageData}
                     alt="Captured"
-                    className="w-[480px] h-[360px] object-cover rounded-lg shadow-md mb-4"
+                    width={480}
+                    height={360}
+                    className="object-cover rounded-lg shadow-md mb-4"
                   />
                   <div className="flex gap-4">
                     <Button onClick={() => setImageData(null)} variant="outline" className="flex items-center gap-2">
