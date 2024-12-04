@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Camera, RefreshCw, Upload } from 'lucide-react';
+import { Camera, RefreshCw, Upload, Recycle, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 
 const ScanPage = () => {
@@ -13,7 +13,6 @@ const ScanPage = () => {
   const [category, setCategory] = useState<string | null>(null);
   const [recyclable, setRecyclable] = useState<boolean | null>(null);
   const [explanation, setExplanation] = useState<string | null>(null);
-  const [responseData, setResponseData] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -52,7 +51,6 @@ const ScanPage = () => {
       setCategory(data.category);
       setRecyclable(data.recyclable);
       setExplanation(data.explanation);
-      setResponseData(data);
       setLoading(false);
       if (response.ok) {
         console.log('Image successfully sent to the server');
@@ -60,6 +58,19 @@ const ScanPage = () => {
         console.error('Failed to send image to the server');
       }
     }
+  };
+
+  const getCategoryColor = (category: string) => {
+    const colors = {
+      plastic: 'bg-blue-500',
+      paper: 'bg-yellow-500',
+      glass: 'bg-green-500',
+      metal: 'bg-red-500',
+      organic: 'bg-brown-500',
+      electronic: 'bg-purple-500',
+      default: 'bg-gray-500'
+    };
+    return colors[category as keyof typeof colors] || colors.default;
   };
 
   return (
@@ -74,12 +85,36 @@ const ScanPage = () => {
         Scan Your Waste
       </h1>
       <SignedIn>
+        {!loading && category && (
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle className="text-2xl text-center">Scan Results</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="flex items-center gap-4">
+                  <div className={`${getCategoryColor(category)} p-4 rounded-full`}>
+                    {recyclable ? <Recycle size={48} className="text-white" /> : <Trash2 size={48} className="text-white" />}
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold">{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
+                    <p className="text-lg font-semibold">{recyclable ? 'Recyclable' : 'Not Recyclable'}</p>
+                  </div>
+                </div>
+                <div className="flex-1 max-w-md">
+                  <h3 className="text-xl font-semibold mb-2">Explanation:</h3>
+                  <p>{explanation}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl text-center">Let&apos;s &quot;sort&quot; your waste!</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className={`flex ${imageData ? 'flex-row' : 'flex-col'} items-center justify-center gap-8`}>
+            <div className="flex flex-col items-center justify-center gap-8">
               <div className="flex flex-col items-center">
                 <video
                   ref={videoRef}
@@ -142,15 +177,6 @@ const ScanPage = () => {
           </CardContent>
         </Card>
       </SignedOut>
-      {loading && <p>Loading...</p>}
-      {!loading && category && (
-        <div>
-          <h2>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
-          <p><strong>Recyclable:</strong> {recyclable ? 'Yes' : 'No'}</p>
-          <p><strong>Explanation:</strong> {explanation}</p>
-          <pre>{JSON.stringify(responseData, null, 2)}</pre>
-        </div>
-      )}
     </div>
   );
 };
