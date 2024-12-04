@@ -10,6 +10,10 @@ import Image from 'next/image';
 const ScanPage = () => {
   const [imageData, setImageData] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [category, setCategory] = useState<string | null>(null);
+  const [responseData, setResponseData] = useState<string | null>(null);
+  const [recyclable, setRecyclable] = useState<boolean | null>(null);
+  const [explanation, setExplanation] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -44,6 +48,11 @@ const ScanPage = () => {
         },
         body: JSON.stringify({ image: imageData }),
       });
+      const data = await response.json();
+      setRecyclable(data.recyclable);
+      setCategory(data.category);
+      setExplanation(data.explanation);
+      setResponseData(JSON.stringify(data, null, 2));
       setLoading(false);
       if (response.ok) {
         console.log('Image successfully sent to the server');
@@ -133,6 +142,15 @@ const ScanPage = () => {
           </CardContent>
         </Card>
       </SignedOut>
+      {loading && <p>Loading...</p>}
+      {!loading && category && (
+        <div>
+          <h2>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
+          <p><strong>Recyclable:</strong> {recyclable ? 'Yes' : 'No'}</p>
+          <p><strong>Explanation:</strong> {explanation}</p>
+          <pre>{responseData}</pre>
+        </div>
+      )}
     </div>
   );
 };
