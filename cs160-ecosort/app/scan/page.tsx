@@ -11,9 +11,9 @@ const ScanPage = () => {
   const [imageData, setImageData] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [category, setCategory] = useState<string | null>(null);
-  const [responseData, setResponseData] = useState<string | null>(null);
   const [recyclable, setRecyclable] = useState<boolean | null>(null);
   const [explanation, setExplanation] = useState<string | null>(null);
+  const [responseData, setResponseData] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -49,10 +49,10 @@ const ScanPage = () => {
         body: JSON.stringify({ image: imageData }),
       });
       const data = await response.json();
-      setRecyclable(data.recyclable);
       setCategory(data.category);
+      setRecyclable(data.recyclable);
       setExplanation(data.explanation);
-      setResponseData(JSON.stringify(data, null, 2));
+      setResponseData(data);
       setLoading(false);
       if (response.ok) {
         console.log('Image successfully sent to the server');
@@ -148,7 +148,7 @@ const ScanPage = () => {
           <h2>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
           <p><strong>Recyclable:</strong> {recyclable ? 'Yes' : 'No'}</p>
           <p><strong>Explanation:</strong> {explanation}</p>
-          <pre>{responseData}</pre>
+          <pre>{JSON.stringify(responseData, null, 2)}</pre>
         </div>
       )}
     </div>

@@ -22,7 +22,17 @@ export async function POST(req: NextRequest) {
 
   const prompt = "You are a recycling expert. You are given an image of a recyclable item. Is it recyclable and what type of recyclable item is it? Your response should first be a boolean indicating whether the item is recyclable, and a single word indicating the category of recyclable item (recyclables, compostables, or general waste). Then, give an explanation of why the item is recyclable or not. Return each different answer in a JSON object.";
   const generatedContent = await model.generateContent([prompt, generativePart]);
+  const responseText = generatedContent.response.text();
+  const jsonString = responseText.match(/```json\n([\s\S]*?)\n```/);
+  let jsonResponse;
+
+  if (jsonString && jsonString[1]) {
+    jsonResponse = JSON.parse(jsonString[1]);
+  } else {
+    console.error('Failed to parse JSON from markdown response');
+    jsonResponse = { error: 'Failed to parse response' };
+  }
   
-  console.log(generatedContent.response.text());
-  return NextResponse.json({ message: 'Image uploaded successfully' }, { status: 200 });
+  console.log(jsonResponse);
+  return NextResponse.json(jsonResponse, { status: 200 });
 }
